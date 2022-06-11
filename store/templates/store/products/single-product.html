@@ -1,0 +1,134 @@
+{% extends 'store/layouts/main2.html' %}
+{% block content %}
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>{{product.category.name}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="single-product-area ">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Search Products</h2>
+                        <form action="">
+                            <input type="text" placeholder="Search products...">
+                            <input type="submit" value="Search">
+                        </form>
+                    </div>
+                    
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Products</h2>
+                        {%for i in n%}
+                        {%for item in all%}
+
+                        <div class="thubmnail-recent">
+                            <img src="{{item.product_image.url}}" class="recent-thumb" alt="">
+                            <h2><a href="">{{item.name}}</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>{{item.selling_price}}</ins> <del>{{item.original_price}}
+                            </del>
+                            </div>                             
+                        </div>
+                        {%endfor%}
+                        {%endfor%}
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="product-content-right product_data">
+                        <div class="product-breadcroumb">
+                            <a href="">Home</a>
+                            <a href="">{{product.category.name}}</a>
+                            <a href="">{{product.name}} -</a>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="product-images">
+                                    <div class="product-main-img">
+                                        <img src="{{product.product_image.url}}" alt="">
+                                    </div>
+                                    
+                                    <div class="product-gallery">
+                                        <img src="img/product-thumb-1.jpg" alt="">
+                                        <img src="img/product-thumb-2.jpg" alt="">
+                                        <img src="img/product-thumb-3.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <div class="product-inner">
+                                    <h2 class="product-name">{{product.name}}</h2>
+                                    <div class="product-inner-price">
+                                        <ins>{{product.selling_price | stringformat:'d'}}</ins> <del>{{product.original_price | stringformat:'d'}}</del>
+                                    </div>    
+                                    
+                                    <form action="" class="cart">
+                                        {% csrf_token %}
+                                        <input type="hidden" value = "{{product.id}}" class= 'prod_id'>
+                                        <div class="quantity">
+                                            <input type="number" size="4" class="input-text qty text qty-input" title="Qty" value="1" name="quantity" min="1" step="1">
+                                        </div>
+                                        <button class="add_to_cart_button AddToCartbtn" type="button" >Add to cart</button>
+                                        <button class="add_to_cart_button addtowishlist " style="margin-left:65px; margin-top: 10px; " type="button">Add Wishlist</button>
+                                    </form>   
+                                    
+
+                                    
+                                    <div role="tabpanel">
+                                        <ul class="product-tab" role="tablist">
+                                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
+                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                                <h2>Product Description</h2>  
+                                                <p>{{product.description}}</p>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="profile">
+                                                <h2>Reviews</h2>
+                                                <div class="submit-review">
+                                                    <p><label for="name">Name</label> <input name="name" type="text"></p>
+                                                    <p><label for="email">Email</label> <input name="email" type="email"></p>
+                                                    <div class="rating-chooser">
+                                                        <p>Your rating</p>
+
+                                                        <div class="rating-wrap-post">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                    <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
+                                                    <p><input type="submit" value="Submit"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

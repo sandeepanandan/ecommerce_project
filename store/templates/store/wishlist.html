@@ -1,0 +1,97 @@
+{% extends 'store/layouts/main2.html' %}
+{% block content %}
+
+<div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Whislist</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+
+<div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce carddata">
+
+                            <form method="post" action="#">
+
+                                <table cellspacing="0" class="shop_table cart">
+                                      {% if wishlist %}
+                                    <thead>
+                                        <tr>
+                                            <th class="product-remove">&nbsp;</th>
+                                            <th class="product-thumbnail">&nbsp;</th>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    {% for item in wishlist %}
+
+                                    <tbody>
+                                        <tr class="cart_item product_data">
+                                            <td class="product-remove">
+                                                <input type="hidden" value = "{{item.product.id}}" class= 'prod_id1'>
+<!--                                                <a title="Remove this item" class="remove delete-wishlist-item" href="#">×</a>-->
+                                                <button type="" class="remove delete-wishlist-item">×</button>
+                                            </td>
+
+                                            <td class="product-thumbnail">
+                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{{item.product.product_image.url}}"></a>
+                                            </td>
+
+                                            <td class="product-name">
+                                                <a href="single-product.html">{{item.product.name}} </a>
+                                            </td>
+
+                                            <td class="product-price">
+                                                <span class="amount">Rs.{{item.product.selling_price | stringformat:'d'}}</span>
+                                            </td>
+
+                                            <td class="product-quantity">
+                                                <div class="quantity buttons_added quantity">
+                                                    <input type="hidden" value = "{{item.product.id}}" class= 'prod_id'>
+                                                    {% csrf_token %}
+                                                    {% if item.product.quantity >= item.product_key%}
+                                                    <input type="button" class="minus decrement-btn" value="-">
+                                                    <input type="number" size="4" class="input-text qty qty-input text" title="Qty" value="1" min="0" step="1">
+                                                    <input type="button" class="plus increment-btn" value="+">
+                                                    {% else %}
+                                                    <h6>Product Out Of Stock</h6>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td class="actions" colspan="6">
+                                                <input type="submit" value="Checkout" name="proceed" class="checkout-button button alt wc-forward">
+                                            </td>
+                                        </tr> {% else %}
+                                    <h4>Your Whishlist Is Empty</h4>
+                                            {% endif %}
+
+
+
+                                    </tbody>
+
+                                </table>
+
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

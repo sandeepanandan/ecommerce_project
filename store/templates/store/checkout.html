@@ -1,0 +1,321 @@
+{% extends 'store/layouts/main2.html' %}
+{% block content %}
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>checkout</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-10">
+                <div class="product-content-right">
+                    <div class="woocommerce">
+                        <div class="woocommerce-info">Returning customer? <a class="showlogin" data-toggle="collapse" href="#login-form-wrap" aria-expanded="false" aria-controls="login-form-wrap">Click here to login</a>
+                        </div>
+
+                        <form id="login-form-wrap" class="login collapse" method="post">
+
+
+                            <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing &amp; Shipping section.</p>
+
+                            <p class="form-row form-row-first">
+                                <label for="username">Username or email <span class="required">*</span>
+                                </label>
+                                <input type="text" id="username" name="username" class="input-text">
+                            </p>
+                            <p class="form-row form-row-last">
+                                <label for="password">Password <span class="required">*</span>
+                                </label>
+                                <input type="password" id="password" name="password" class="input-text">
+                            </p>
+                            <div class="clear"></div>
+
+
+                            <p class="form-row">
+                                <input type="submit" value="Login" name="login" class="button">
+                                <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Remember me </label>
+                            </p>
+                            <p class="lost_password">
+                                <a href="#">Lost your password?</a>
+                            </p>
+
+                            <div class="clear"></div>
+                        </form>
+
+                        <div class="woocommerce-info">Have a coupon? <a class="showcoupon" data-toggle="collapse" href="#coupon-collapse-wrap" aria-expanded="false" aria-controls="coupon-collapse-wrap">Click here to enter your code</a>
+                        </div>
+
+                        <form id="coupon-collapse-wrap" method="post" class="checkout_coupon collapse">
+
+                            <p class="form-row form-row-first">
+                                <input type="text" value="" id="coupon_code" placeholder="Coupon code" class="input-text" name="coupon_code">
+                            </p>
+
+                            <p class="form-row form-row-last">
+                                <input type="submit" value="Apply Coupon" name="apply_coupon" class="button">
+                            </p>
+
+                            <div class="clear"></div>
+                        </form>
+
+                        <form enctype="multipart/form-data" action="{% url 'placeorder' %}"  class="checkout" method="post" name="checkout">
+                             {% csrf_token %}
+                            <div id="customer_details" class="col2-set">
+                                <div class="col-3">
+                                    <div class="woocommerce-billing-fields">
+                                        <h3>Billing Details</h3>
+                                        <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                            <label class="" for="billing_first_name">First Name <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" placeholder="Enter first name" id="billing_first_name" class="input-text " name= 'firstName' required value='{{request.user.first_name}}'>
+                                        </p>
+
+                                        <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                            <label class="" for="billing_last_name">Last Name <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" id="billing_last_name" class="input-text " name= 'lastName' required  placeholder='Enter Last name' value='{{request.user.last_name}}'>
+                                        </p>
+                                        <div class="clear"></div>
+
+                                        <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
+                                            <label class="" for="billing_address_1">Address <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <textarea id="billing_address_1" class="input-text " name='address' required placeholder='Enter Address' value='{{request.user.address}}'></textarea>
+                                        </p>
+                                        <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
+                                            <label class="" for="billing_city">Town / City <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" required value='{{request.user.city}}'  placeholder= 'Enter City' name='city' class="input-text ">
+                                        </p>
+                                        <p  class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
+                                            <label class="" for="billing_state">State</label>
+                                            <input type="text" required value='{{request.user.state}}' placeholder= 'Enter State' name='state' class="input-text ">
+                                        </p>
+
+                                        <p id="billing_state_field" class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
+                                            <label class="" for="billing_state">County</label>
+                                            <input type="text" id="billing_state" required value='{{request.user.country}}' placeholder= 'Enter Country' name='country' class="input-text ">
+                                        </p>
+                                        <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
+                                            <label class="" for="billing_postcode">Postcode <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" required value='{{request.user.pincode}}' placeholder= 'Enter Pincode'name='zip' class="input-text ">
+                                        </p>
+
+                                        <div class="clear"></div>
+
+                                        <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
+                                            <label class="" for="billing_email">Email Address <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" value="" id="billing_email" class="input-text "name= 'email' required placeholder='Enter Email' value='{{request.user.email}}'>
+                                        </p>
+
+                                        <p id="billing_phone_field" class="form-row form-row-last validate-required validate-phone">
+                                            <label class="" for="billing_phone">Phone <abbr title="required" class="required">*</abbr>
+                                            </label>
+                                            <input type="text" value="" id="billing_phone" class="input-text " required placeholder= 'Enter Phone' value='{{request.user.phone}}'  name='phone'>
+                                        </p>
+                                        <div class="clear"></div>
+                                            <div class="clear"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 id="order_review_heading">Your order</h3>
+
+                            <div id="order_review" style="position: relative;">
+                                <table class="shop_table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name" colspan="2">Product</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                            {% for item in cartitems %}
+                                        <tr class="cart_item">
+
+                                            <td class="product-name" colspan="2">
+                                                {{item.product.name}} <strong class="product-quantity">×{{item.product_key}}</strong> </td>
+                                        </tr>
+                                         {% endfor %}
+
+                                    </tbody>
+
+
+
+
+                                    <tfoot>
+
+                                        <tr class="cart-subtotal">
+                                            <th>Cart Subtotal</th>
+
+                                            <td><span class="amount">Rs {{total_price}}</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr class="shipping">
+                                            <th>Shipping and Handling</th>
+                                            <td>
+
+                                                Free Shipping
+                                                <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
+                                            </td>
+                                        </tr>
+
+
+                                        <tr class="order-total">
+                                            <th>Order Total</th>
+                                            <td><strong><span class="amount">Rs {{total_price |stringformat:'d'}}</span></strong> </td>
+                                        </tr>
+
+                                    </tfoot>
+                                </table>
+
+
+                                <div id="payment" class='col-md-12'>
+                                    <input type="hidden" value = 'COD' name = 'payment_mode'>
+                                    <div class="form-row place-order col-md-8 ">
+
+                                        <input type="submit" data-value="Place order" value="COD | Place Order" id="place_order" name="woocommerce_checkout_place_order" class=" btn btn-primary col-md-4">
+                                        <button type="button" class= 'btn btn-primary razorpay col-md-4' style ="margin-left: 100px; padding: 10px 27px;" >PAY WITH RAZORPAY</button>
+                                        
+
+                                    <div class="clear"></div>
+                                    </div><div id="paypal-button-container" class='col-md-4'></div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARxDWumDXYlUzW2qKPXyY3G32k2rwbXC2Ius2BKO0zNHo9_u7N1MgSqwL_Ab2mpim1_jjdcPygA7O3fx&currency=USD"></script>
+<script>
+
+    paypal.Buttons({
+        style:{
+            color :'blue'
+        },
+        onClick : function(data,action){
+            //my validations
+            var fname = $("[name='firstName']").val();
+            var lname = $('[name="lastName"]').val();
+            var email = $('[name="email"]').val();
+            var phone = $('[name="phone"]').val();
+            var address = $('[name="address"]').val();
+            var country = $('[name="country"]').val(); 
+            var state= $('[name="state"]').val();
+            var pincode = $('[name="zip"]').val();
+            var token= $('[name="csrfmiddlewaretoken"]').val();
+
+            if (fname == '' || lname == '' || email == '' || address == '' ||country  == '' || state == '' || pincode == '' || phone=='')
+            {
+                swal("All Fields Are Mandatory",'error');
+                return false;
+            }
+            else
+            {
+                return true; 
+            }
+            },
+        
+
+      // Sets up the transaction when a payment button is clicked
+
+      createOrder: (data, actions) => {
+
+        return actions.order.create({
+
+          purchase_units: [{
+
+            amount: {
+
+              value: '{{total_price |stringformat:'d'}}.' // Can also reference a variable or function
+
+            }
+
+          }]
+
+        });
+
+      },
+
+      // Finalize the transaction after payer approval
+
+      onApprove: (data, actions) => {
+
+        return actions.order.capture().then(function(orderData) {
+
+          // Successful capture! For dev/demo purposes:
+
+         // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+          //const transaction = orderData.purchase_units[0].payments.captures[0];
+
+          //alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+          // When ready to go live, remove the alert and show a success message within this page. For example:
+
+          // const element = document.getElementById('paypal-button-container');
+
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+          // Or go to another URL:  actions.redirect('thank_you.html');
+          data = {
+            'fname': fname,  
+            'lname': lname,  
+            'email': email,  
+            'phone': phone,  
+            'address' :ddress,  
+            'country' :ountry,  
+            'state': state,  
+            'pincode' :incode,
+            'payment_mode' :'Paid by Paypal' ,
+            'payment_id': orderData.id,
+            csrfmiddlewaretoken:token
+            
+        }
+        $.ajax({
+            method: 'POST',
+            url:'/place-order',
+            data:data,
+            success:function (response3){
+                swal("Concragulations",response3.status,'success').then((value) => {
+                     window.location.href = '/my-orers '
+                  });
+                return false;
+
+            }
+        })
+
+        });
+
+      }
+
+    }).render('#paypal-button-container');
+
+  </script>
+{% endblock scripts %}

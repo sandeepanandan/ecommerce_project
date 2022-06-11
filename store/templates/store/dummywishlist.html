@@ -1,0 +1,87 @@
+{% extends 'store/layouts/main2.html' %} {% block content %}
+<section class="h-100 h-custom" style="background-color: #d2c9ff">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-8">
+                <div class="p-5 carddata">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h1 class="fw-bold mb-0 text-black">Wishlist</h1>
+                    <h6 class="mb-0 text-muted">3 items</h6>
+                  </div>
+                  <hr class="my-4" />
+                  {% if wishlist %} {% for item in wishlist %}
+
+                  <div class="row mb-4 d-flex justify-content-between align-items-center carddata product_data">
+                    <div class="col-md-3 col-lg-2 col-xl-2">
+                      <img
+                        src="{{item.wishlist.product_image.url}}"
+                        class="img-fluid rounded-3"
+                        alt="{{item.product.name}} Image"
+                      />
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-muted">{{item.product.category}}</h6>
+                      <h6 class="text-black mb-0">{{item.product.name}}</h6>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      {% if item.wishlist.quantity >= item.product_key%}
+                      <label for="" class="badge bg-success">In stock</label>
+
+                      {% else %}
+                      <label for="" class="badge bg-warning"
+                        >Out of stock</label
+                      >
+                      {% endif %}
+                    </div>
+
+                    <a
+                      href="{% url 'itemview' item.product.category.slug item.product.slug %}"
+                      class="col-md-2 col-lg-2 col-xl-2"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-primary me-3 float-start"
+                      >
+                        View Product
+                      </button>
+                    </a>
+                    {% csrf_token %}
+                    <input
+                      type="hidden"
+                      class="prod_id"
+                      value="{{item.product_id}}"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-danger me-3 float-start delete-wishlist-item col-md-2 col-lg-2 col-xl-2"
+                    >
+                      Delete
+                    </button>
+                    <hr class="my-4" />
+                    {% endfor %} {% else %}
+                    <h4>Your Wishlist Is Empty</h4>
+                    {% endif %}
+                    <div class="pt-5">
+                      <h6 class="mb-0">
+                        <a href="#!" class="text-body"
+                          ><i class="fas fa-long-arrow-alt-left me-2"></i>Back
+                          to shop</a
+                        >
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

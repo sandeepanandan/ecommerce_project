@@ -1,0 +1,79 @@
+{% extends 'store/layouts/main2.html' %}
+{% block content %}
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>{{name.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="latest-product">
+                        <h2 class="section-title">Latest Products</h2>
+                        <div class="product-carousel">
+                            {% for product in products %}
+                                <div class="single-product">
+                <div class="product-f-image">
+                    <img src="{{product.product_image.url}}" alt="">
+                    <div class="product-hover">
+                        <a href="{% url 'itemview' product.category.slug product.slug %}" class="add-to-cart-link "><i class="fa fa-link"></i> See details</a>
+                    </div>
+                </div>
+
+                    <h2><a href="">{{product.name}}</a></h2>
+
+                <div class="product-carousel-price">
+                    <ins>{{product.selling_price | stringformat:'d'}}</ins> <del>{{product.original_price | stringformat:'d'}}</del>
+                </div>
+            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End main content area -->
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-pagination text-center">
+                    <nav>
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

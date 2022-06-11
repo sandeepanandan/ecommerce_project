@@ -1,0 +1,39 @@
+{% extends 'store/layouts/main.html' %}
+
+
+{% block content %}
+<div class="py-3 bg-primary text-white">
+    <div class="container">
+        <a href="">HOME</a>
+    </div>
+</div>
+<div class="py-1 bg-primary">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}">Home</a>
+        <a class="text-white" href="{% url 'collections' %}">/Collections</a>
+        <a class="text-white" href="{% url 'productview' name.slug %}">/{{name.name}}</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>{{name.name}}</h2>
+    <div class="row" style= 'display:flex justify-content: space-around;'>
+        {% for item in product %}
+        <a href="{% url 'itemview' item.category.slug item.slug %}">
+            <div class="card col-md-4" >
+                <img src="{{item.product_image.url}}" class="card-img-top" alt="category-img">
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <span>{{item.original_price | stringformat:'d'}}</span>
+                  <span class="float-end">{{item.selling_price | stringformat:'d'}}</span>
+                  
+                  
+                </div>
+              </div>
+        </a>
+        
+          {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
