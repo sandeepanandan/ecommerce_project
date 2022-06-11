@@ -25,7 +25,7 @@ def home(request):
     user = request.user
     cart_details = cart_info(user)
     context = {'category': collections,'topnew':trending_products,'topsell':top_selling,'qty':cart_details[0],'price':cart_details[1]}
-    return render(request, 'store/index.html', context)
+    return render(request, 'index.html', context)
 
 def collections(request):
     user = request.user
